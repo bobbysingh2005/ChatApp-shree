@@ -1,2 +1,3 @@
-# dev-sat-chat
-typescript rnd
+# ChatApp-shree
+
+simple chat application, any one use it on local pc
