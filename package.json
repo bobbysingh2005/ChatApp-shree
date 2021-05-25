@@ -4,5 +4,10 @@
   "main": "index.js",
   "repository": "https://github.com/bobbysingh2005/dev-sat-chat",
   "author": "bobby singh <bobbysingh2005@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^15.6.1",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.2.4"
+  }
 }
