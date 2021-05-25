@@ -1,0 +1,8 @@
+{
+  "name": "dev-sat-chat",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/bobbysingh2005/dev-sat-chat",
+  "author": "bobby singh <bobbysingh2005@gmail.com>",
+  "license": "MIT"
+}
