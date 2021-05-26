@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"name": "api",
+			"path": "./api"
+		},{
+			"name": "application",
+			"path": "./app"
+		},{
+			"name": "blue",
+			"path": "./blu_api"
+		}
+	],
+	"settings": {}
+}
