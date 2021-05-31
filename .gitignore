@@ -354,3 +354,4 @@ yarn.lock
 blu_api
 .env
 
+workspace.code-workspace
