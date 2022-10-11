@@ -1,0 +1,10 @@
+
+/node_modules/
+
+#local env
+.env*
+.vscode*
+/bk-*
+/bk_*
+/*.code-workspace
+package-lock.json
