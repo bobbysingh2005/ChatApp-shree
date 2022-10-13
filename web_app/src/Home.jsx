@@ -1,16 +1,21 @@
 import _ from 'lodash';
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { AppSetting } from './components/Default-layout';
 
 import InputBox from './components/Input-box';
 import Messages from './components/messages';
+import VideoBox from './components/Video-box';
 
-function Home (){
+export default function Home (){
 const {app, users, message, ws} = useContext(AppSetting);
 const navigate = useNavigate();
 const [isReady, setReady] = useState(false);
+const [cameraOnOff, setCamera] = useState(false);
 
+//toggle function for video on/off
+const cameraToggle = ()=>setCamera(!cameraOnOff);
 const chat = async (ws)=>{
 ws.onmessage = ({ data })=>{
 let msg = JSON.parse(data);
@@ -95,9 +100,9 @@ return (
 <>
 <h1>home</h1>
 {users.users.selected ? (<h2>Chat to: {users.users.selected.name}</h2>): ""}
+{cameraOnOff ? (<VideoBox toggle={cameraToggle} />) : (<Button type="button" onClick={cameraToggle} >Start Video</Button>)}
 <Messages />
 <InputBox sendTo={sendTo} />
 </>
 )};//end;
 
-export default Home;

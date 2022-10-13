@@ -89,7 +89,7 @@ break;
 
 case "answer":
     users[msg.id].send(JSON.stringify({ type: "answer", user: users[id].user, message: msg.message }));
-break;
+    break;
 
 default:
 break;
