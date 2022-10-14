@@ -65,19 +65,23 @@ break;
 
 case "answer":
 let data = {
-date: new Date().toLocaleString(),
+date: new Date(),
 user: msg.user,
 text: msg.message
 };
 setTimeout(()=>message.update({ type: "add", msg: data}),500);
-// alert(JSON.stringify(msg))
-// alert(msg.message)
 break;
 
+case "pc_offer":
+alert("pc_offer = "+JSON.stringify(msg))
+break;
+case "pc_answer":
+alert("pc_answer "+JSON.stringify(msg))
+break;
 };//endSwitch;
 };//end;
-if(!app.setting.isWsConnect){
-ws.send(JSON.stringify({ type: "register_user", userName: app.setting.userName}));
+if(!app.isWsConnect){
+ws.send(JSON.stringify({ type: "register_user", userName: app.userName}));
 }
 };//end;
 
@@ -87,7 +91,7 @@ conn.send(data)
 }
 
 useEffect(()=>{
-if(app.setting.isLogin){
+if(app.isLogin){
 if(isReady){
 chat(ws);
 };//endIf;
@@ -99,8 +103,8 @@ navigate("/login")
 return (
 <>
 <h1>home</h1>
-{users.users.selected ? (<h2>Chat to: {users.users.selected.name}</h2>): ""}
-{cameraOnOff ? (<VideoBox toggle={cameraToggle} />) : (<Button type="button" onClick={cameraToggle} >Start Video</Button>)}
+{users.selected ? (<h2>Chat to: {users.selected.name}</h2>): ""}
+{cameraOnOff ? (<VideoBox toggle={cameraToggle} sendTo={sendTo} />) : (<Button type="button" onClick={cameraToggle} >Start Video</Button>)}
 <Messages />
 <InputBox sendTo={sendTo} />
 </>

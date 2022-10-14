@@ -82,15 +82,31 @@ users[msg.id].send(JSON.stringify({ type: "reject", message: `${users[id].user.n
 _.map(users, (val,i)=>{
 // if(val.id!==id||val.id!==msg.id) users[val.id].send(JSON.stringify({ type: "refresh"}))
 })
-// iam = _.filter(users[id].myGroup, [ "id", msg.id ]);
-// other = _.filter(users[msg.id].myGroup, [ "id", id ]);
-// console.log(`iam: ${JSON.stringify(iam)} - other: ${JSON.stringify(other)}`);
 break;
 
 case "answer":
     users[msg.id].send(JSON.stringify({ type: "answer", user: users[id].user, message: msg.message }));
     break;
 
+case "pc_offer":
+let pcOffer = {
+type: "pc_offer",
+id: id,
+pcOffer: msg.offer
+};
+console.log(pcOffer)
+users[msg.id].send(JSON.stringify(pcOffer))
+break;
+
+case "pc_answer":
+let pcAnswer = {
+type: "pc_answer",
+id: id,
+pcAnswer: msg.answer
+};
+console.log(pcAnswer)
+users[msg.id].send(JSON.stringify(pcAnswer))
+break;
 default:
 break;
 }

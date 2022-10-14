@@ -8,8 +8,8 @@ const location = useLocation();
 
 useEffect(()=>{
     let title = `Welcome to ShreeChatApp`;
-    if(app.setting && app.setting.isLogin && app.setting.userName) {
-document.title = `${app.setting.userName} ${title} - online  `;
+    if(app && app.isLogin && app.userName) {
+document.title = `${app.userName} ${title} - online  `;
 }else{
 document.title = `${title} - Wait for Join`;
 };//endIf;
@@ -17,7 +17,7 @@ document.title = `${title} - Wait for Join`;
 
 return (
 <header>
-Welcome { app.setting && app.setting.userName}
+Welcome { app && app.userName}
 </header>
 )
 }

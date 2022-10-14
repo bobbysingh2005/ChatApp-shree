@@ -14,10 +14,10 @@ return (
 <div>
 <h1>Side bar</h1>
 <ul>
-{users.users && users.users.list ? _.map(users.users.list, (val, i)=>{
+{users.list ? _.map(users.list, (val, i)=>{
 if(!val) return null;
 // if(users.users && users.users.selected===val.name) alert(`selected user: ${val.name}`);
-if(users.users && users.users.selected.id===val.id) return (<li key={i} aria-label={`selected ${val.name}`} >{val.name}</li>);
+if(users.selected.id===val.id) return (<li key={i} aria-label={`selected ${val.name}`} >{val.name}</li>);
 
 return (
 <li key={i}

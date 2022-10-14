@@ -2,13 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { AppSetting } from './Default-layout';
 
-function InputBox ({ sendTo}) {
+export default function InputBox ({ sendTo}) {
 const {app, message, users, ws} = useContext(AppSetting);
 const [text, setText] = useState("");
 
 useEffect(()=>{
-// alert(JSON.stringify(message.message))
-},[message.message])
+},[message.msg])
 
 return (
 <>
@@ -16,10 +15,10 @@ return (
 onSubmit={(ev)=>{
 ev.preventDefault();
 let { name, value} = ev.target.msg;
-let user = users.users.selected;
+let user = users.selected;
 let data = {
-    date: new Date().toLocaleString(),
-    user: { name: app.setting.userName },
+    date: new Date(),
+    user: { name: app.userName },
     text: value
 };
 message.update({ type: "add", msg: data});
@@ -39,5 +38,3 @@ onChange={(ev)=>setText(ev.target.value)}
 </Form>
 </>
 )}
-
-export default InputBox;

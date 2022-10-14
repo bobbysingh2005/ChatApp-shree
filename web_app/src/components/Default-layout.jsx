@@ -7,8 +7,8 @@ import _ from 'lodash';
 
 export const AppSetting = createContext();
 
-export const settingInitialState = { userName: "", isLogin: false, isWsConnected: false, };
-export function settingReducer (state, {type, ...rest}){
+export const settingInitialState = { userName: "", isLogin: false, isWsConnected: false, ws: false, pc: false };
+export function settingReducer(state, { type, ...rest }) {
 switch (type) {
 case "set":
 return Object.assign({}, state, rest);
@@ -20,55 +20,65 @@ break;
 };//end;
 
 export const usersInitialState = { selected: "", list: [] };
-export function usersReducer (state, {type, ...rest}){
-    switch (type) {
-    case "set":
-    return Object.assign({}, state, rest);
-    break;
-    return state;
-    default:
-    break;
-    }
-    };//end;
+export function usersReducer(state, { type, ...rest }) {
+switch (type) {
+case "set":
+return Object.assign({}, state, rest);
+break;
+return state;
+default:
+return state;
+break;
+}
+};//end;
 
-export const messageInitialState = {msg: []};
-export function messageReducer (state, {type, ...rest}){
-    switch (type) {
-    case "add":
+export const messageInitialState = { msg: [] };
+export function messageReducer(state, { type, ...rest }) {
+switch (type) {
+case "add":
 let msg = state.msg ? state.msg : [];
 msg = [...msg, rest.msg];
-return Object.assign({}, state, { msg: msg})
-    break;
+return Object.assign({}, state, { msg: msg })
+break;
 case "clean":
 return messageInitialState;
 break;
-    default:
+default:
 return state;
-    break;
-    }
-    };//end;
+break;
+}
+};//end;
 
-export default function DefaultLayout (){
+export default function DefaultLayout() {
 const wso = useRef();
+const peerConnection = useRef();
 const [setting, setSetting] = useReducer(settingReducer, settingInitialState)
 const [users, setUsers] = useReducer(usersReducer, usersInitialState)
 const [message, setMessage] = useReducer(messageReducer, messageInitialState)
 
-useEffect(()=>{
-if(!wso.current){
+useEffect(() => {
+if (!wso.current) {
 wso.current = new WebSocket(`ws://192.168.1.2:3000/`);
-wso.current.onopen = ()=>console.log(`websocket connection is open`);
-wso.current.onclose = ()=>console.log(`websocket connection is close`);
+wso.current.onopen = () => console.log(`websocket connection is open`);
+wso.current.onclose = () => console.log(`websocket connection is close`);
 };//endIf;
-return ()=>{
-}},[]);
+if(!peerConnection.current) {
+RTCPeerConnection = window.RTCPeerConnection || window.webkitRTCPeerConnection || window.mozRTCPeerConnection || window.msRTCPeerConnection;
+const config = { iceServers: [{ "url": "stun:stun.1.google.com:19302" }], }
+peerConnection.current = new RTCPeerConnection(config);
+console.log('initial Peer connection')
+};//endIf;
+return () => {
+}
+}, []);
 
 return (
 <AppSetting.Provider value={{
 ws: wso.current,
-app:{ setting, update: setSetting },
-users:{users, update: setUsers},
-message:{message, update: setMessage}
+pc: peerConnection.current,
+app: { ...setting, update: setSetting },
+users: { ...users, update: setUsers },
+message: { ...message, update: setMessage }
 }} >
 <MainHeader />
 <MainSidebar />
@@ -77,4 +87,5 @@ message:{message, update: setMessage}
 </main>
 <MainFooter />
 </AppSetting.Provider>
-)};
+)
+};
