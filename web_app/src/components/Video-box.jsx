@@ -28,7 +28,7 @@ pc.createOffer(function (offer) {
 pc.setLocalDescription(offer);
 pc.setRemoteDescription(offer);
 alert("offer: "+JSON.stringify(offer, null, 2))
-sendTo(ws, { type: "pc_offer", id: users.selected.id, offer: offer })
+// sendTo(ws, { type: "pc_offer", id: users.selected.id, offer: offer })
 });//end;
 
 console.log(`ready pc`)
