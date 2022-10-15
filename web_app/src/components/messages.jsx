@@ -16,11 +16,10 @@ return (
 _.map(message.msg, (msg, i) => {
 return (
 <article key={i}>
-<section>
-<header><Moment date={msg.date} format="DD/MM/YYYY" /></header>
+<header>
+<h3><Moment date={msg.date} format="DD/MM/YYYY" /> - {msg.user.name}</h3>
+</header>
 {msg.text}
-<footer>{msg.user.name}</footer>
-</section>
 </article>)
 })
 : ""}
