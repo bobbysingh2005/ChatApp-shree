@@ -7,7 +7,7 @@ import _ from 'lodash';
 
 export const AppSetting = createContext();
 
-export const settingInitialState = { userName: "", isLogin: false, isWsConnected: false, ws: false, pc: false };
+export const settingInitialState = { userName: "", isLogin: false, isWsConnected: false, ws: false, pc: false, onOffer: false, onAnswer: false, iceCandidate: false };
 export function settingReducer(state, { type, ...rest }) {
 switch (type) {
 case "set":
@@ -25,7 +25,6 @@ switch (type) {
 case "set":
 return Object.assign({}, state, rest);
 break;
-return state;
 default:
 return state;
 break;
@@ -51,7 +50,6 @@ break;
 
 export default function DefaultLayout() {
 const wso = useRef();
-const peerConnection = useRef();
 const [setting, setSetting] = useReducer(settingReducer, settingInitialState)
 const [users, setUsers] = useReducer(usersReducer, usersInitialState)
 const [message, setMessage] = useReducer(messageReducer, messageInitialState)
@@ -62,12 +60,7 @@ wso.current = new WebSocket(`ws://192.168.1.2:3000/`);
 wso.current.onopen = () => console.log(`websocket connection is open`);
 wso.current.onclose = () => console.log(`websocket connection is close`);
 };//endIf;
-if(!peerConnection.current) {
-RTCPeerConnection = window.RTCPeerConnection || window.webkitRTCPeerConnection || window.mozRTCPeerConnection || window.msRTCPeerConnection;
-const config = { iceServers: [{ "url": "stun:stun.1.google.com:19302" }], }
-peerConnection.current = new RTCPeerConnection(config);
-console.log('initial Peer connection')
-};//endIf;
+
 return () => {
 }
 }, []);
@@ -75,7 +68,6 @@ return () => {
 return (
 <AppSetting.Provider value={{
 ws: wso.current,
-pc: peerConnection.current,
 app: { ...setting, update: setSetting },
 users: { ...users, update: setUsers },
 message: { ...message, update: setMessage }
@@ -88,4 +80,4 @@ message: { ...message, update: setMessage }
 <MainFooter />
 </AppSetting.Provider>
 )
-};
+};//TheEnd;

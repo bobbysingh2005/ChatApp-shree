@@ -13,7 +13,7 @@ return navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUse
 
 const pcInit = async (stream) => {
 try {
-    
+
 // Setup stream listening
 pc.addStream(stream)
 
@@ -27,9 +27,9 @@ alert(event.icecandidate)
 pc.createOffer(function (offer) {
 pc.setLocalDescription(offer);
 pc.setRemoteDescription(offer);
-alert("offer: "+JSON.stringify(offer, null, 2))
-// sendTo(ws, { type: "pc_offer", id: users.selected.id, offer: offer })
-});//end;
+// alert("offer: "+JSON.stringify(offer, null, 2))
+sendTo(ws, { type: "pc_offer", id: users.selected.id, offer: offer })
+}, (err) => alert(err));//end;
 
 console.log(`ready pc`)
 

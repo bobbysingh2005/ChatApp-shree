@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { sendTo } from '../Home';
 import { AppSetting } from './Default-layout';
 
-export default function InputBox ({ sendTo}) {
+export default function InputBox () {
 const {app, message, users, ws} = useContext(AppSetting);
 const [text, setText] = useState("");
 
