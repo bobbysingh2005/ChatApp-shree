@@ -1,18 +1,41 @@
-console.clear();
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
-console.log('String list or prototype: ',Object.getOwnPropertyNames(String.prototype))
-console.log('Number list or prototype: ',Object.getOwnPropertyNames(Number.prototype))
-console.log('Array list or prototype: ',Object.getOwnPropertyNames(Array.prototype))
-console.log('Function list or prototype: ',Object.getOwnPropertyNames(Function.prototype))
-console.log('Object list or prototype: ',Object.getOwnPropertyNames(Object.prototype))
-console.log('JSON list or prototype: ',Object.getOwnPropertyNames(JSON))
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
 
-function AA () {
-this.name = 'test aa'
-};//end;
-function BB (){
-this.name = "bob test"
-};
-let bob = new AA();
-bob.__proto__ = BB.__proto__;
-console.log(bob.name)
+var app = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
+
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+module.exports = app;
